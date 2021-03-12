@@ -107,7 +107,7 @@ void TouchScreen::touchToPos()
 	m_xPos = ((float)m_xMeasure - (m_xMax - m_xMin) / 2) * m_xLength / (m_xMax - m_xMin);
 	m_yPos = ((float)m_yMeasure - (m_yMax - m_yMin) / 2) * m_yLength / (m_yMax - m_yMin);
 
-	float theta = radians(0.974);
+	float theta = radians(0);
 	m_xPos = m_xPos*cos(theta) - m_yPos*sin(theta);
 	m_yPos = m_xPos*sin(theta) + m_yPos*cos(theta);
 }

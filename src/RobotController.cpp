@@ -9,8 +9,11 @@ void RobotController::begin(SSC32& ssc, int servo0, int servo1, int servo2, int 
 	m_servo1 = &ssc[servo1];
 	m_servo2 = &ssc[servo2];
 	m_servo3 = &ssc[servo3];
-	m_servo3 = &ssc[servo4];
-	m_servo3 = &ssc[servo5];
+	m_servo4 = &ssc[servo4];
+	m_servo5 = &ssc[servo5];
+
+	m_biasX = 0;
+	m_biasY = 0;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -24,7 +27,10 @@ void RobotController::config()
 
 void RobotController::set_pose(platform_t desiredPose)
 {
-	m_moveOK = m_ik.calcServoAnglesOld(desiredPose, m_servoAngles);
+	platform_t newPose = {desiredPose.hx_x, desiredPose.hx_y, desiredPose.hx_z,
+												desiredPose.hx_a - m_biasX, desiredPose.hx_b - m_biasY, desiredPose.hx_c};
+
+	m_moveOK = m_ik.calcServoAnglesOld(newPose, m_servoAngles);
 	updateServos(m_moveOK);
 }
 
@@ -32,7 +38,11 @@ void RobotController::set_pose(platform_t desiredPose)
 
 void RobotController::set_pose(platform_t& desiredPose)
 {
-	m_moveOK = m_ik.calcServoAngles(desiredPose, m_servoAngles);
+
+	platform_t newPose = {desiredPose.hx_x, desiredPose.hx_y, desiredPose.hx_z,
+												desiredPose.hx_a - m_biasX, desiredPose.hx_b - m_biasY, desiredPose.hx_c};
+
+	m_moveOK = m_ik.calcServoAngles(newPose, m_servoAngles);
 	if (m_moveOK == 0)
 	{
 		updateServos(m_moveOK);
@@ -50,6 +60,14 @@ void RobotController::home()
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
+void RobotController::setBias(double _biasX, double _biasY)
+{
+	m_biasX = _biasX;
+	m_biasY = _biasY;
+
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void RobotController::updateServos(int8_t movOK)
 {

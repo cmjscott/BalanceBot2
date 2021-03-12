@@ -14,6 +14,7 @@
 #include "Adafruit_LSM303_U.h"
 #include "Adafruit_L3GD20_U.h"
 #include "Adafruit_9DOF.h"
+#include "Adafruit_BNO055.h"
 
 // adafruit touch screen libraries
 #include "Adafruit_STMPE610.h"
@@ -22,7 +23,7 @@
 #include "ArduinoEigen.h"
 #include "kalmanfilter.h"
 
-#define SENSOR_SGFILTER_NP 25
+#define SENSOR_SGFILTER_NP 15
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 using namespace Eigen;
@@ -35,6 +36,9 @@ public:
 	void begin();
 	void reset();
 	void initSensors();
+	void displayCalStatus(void);
+	void resetBNO_offsets();
+	void displaySensorStatus(void);
 
 	int isTouched(){return screen->m_isTouched;}
 
@@ -55,10 +59,12 @@ protected:
 	Adafruit_LSM303_Accel_Unified accel;
 	Adafruit_LSM303_Mag_Unified   mag;
 	Adafruit_L3GD20_Unified 			gyro;
+	Adafruit_BNO055 							bno;
 
 	sensors_event_t accel_event;
 	sensors_event_t mag_event;
 	sensors_event_t gyro_event;
+	sensors_event_t bno_event;
 	sensors_vec_t   orientation;
 
 
@@ -78,8 +84,9 @@ protected:
 	/* Update this with the correct SLP for accurate altitude measurements */
 	const float seaLevelPressure = SENSORS_PRESSURE_SEALEVELHPA;
 
-	static const double SGFILTER_COEFF0[15];
-	static const double SGFILTER_COEFF1[SENSOR_SGFILTER_NP];
+	static const double SGFILTER_COEFF0[SENSOR_SGFILTER_NP];
+	static const double SGFILTER_COEFF1[25];
+	static const adafruit_bno055_offsets_t bno_calibration;
 
 	void smoothIMU();
 	double applySGFilter(const double samples[], const double coeffs[]);

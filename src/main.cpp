@@ -19,6 +19,7 @@
 #include "Adafruit_LSM303_U.h"
 #include "Adafruit_L3GD20_U.h"
 #include "Adafruit_9DOF.h"
+#include "Adafruit_BNO055.h"
 
 // adafruit touch screen libraries
 #include "Adafruit_STMPE610.h"
@@ -78,14 +79,29 @@ void rotationTest2();
 void printIMU();
 void initSensors();
 
+
 void setup()
 {
 	Serial.begin(115200);
+	Serial.println("x, xDot, y, yDot, ux, uy");
 	Serial1.begin(115200);
+
+
 
 	inpU[0] = 0;
 	inpU[1] = 0;
 
+
+	//Set up robot parameters and attach servos to SSC32
+	ssc.begin(Serial1);
+	robot.begin(ssc, 0, 1, 2, 4, 5, 6);
+	robot.setBias(radians(-0.75), radians(1.2));
+
+	//Setup for touch screen Test
+	//touch.begin(0x41);
+	//ssc[5].config(500, 2500, 0, 180, 0, true);
+	//ssc[5].set_degrees(120);
+	//ssc.commit();
 
 	//screen.config xMax, xMin, xLength, yMax, yMin, yLength);
 	screen.config(3875, 200, 228, 4000, 75, 304); // milimeters
@@ -96,29 +112,16 @@ void setup()
 	initKalman();
 
 	sensor.config(screen, KFPlatformX, KFPlatformY);
-	//sensor.setBias(0.75, -0.4, 0.75, 4.5);
+	sensor.setBias(-0.45, 0.3, -0.01, -0.08);
 	sensor.enable();
 	sensor.setTimestep(0.005);
 	sensor.begin();
-
-
-
 
 
 	controller.config(sensor, KFx, KFy);
 	controller.enable();
 	controller.setTimestep(0.015);
 	controller.begin();
-
-	//Set up robot parameters and attach servos to SSC32
-	ssc.begin(Serial1);
-	robot.begin(ssc, 0, 1, 2, 4, 5, 6);
-
-	//Setup for touch screen Test
-	//touch.begin(0x41);
-	//ssc[5].config(500, 2500, 0, 180, 0, true);
-	//ssc[5].set_degrees(120);
-	//ssc.commit();
 
 	if(true){
 		ssc[0].config(500, 2500, 0, 180, -60, true);
@@ -130,8 +133,13 @@ void setup()
 
 		//Ensure that everything is set up before homing robot
 		delay(1000);
+		robot.set_pose({0, 0, 10, radians(0), radians(0), radians(0)});
+		delay(1000);
+		//robot.set_pose({0, 0, 0, radians(0.75), radians(-1.2), radians(0)});
 		robot.set_pose({0, 0, 0, radians(0), radians(0), radians(0)});
 		delay(1000);
+		//controller.setXDesired(30.0);
+		//controller.setYDesired(30.0);
 	}
 
 
@@ -141,14 +149,15 @@ void setup()
 	//Serial.println("x, zx, xdot, zxdot, theta, zTheta, thetaDot, zThetaDot, input");
 	//Serial.println("t, x, zx, xdot, zxdot, ux, y, zy, ydot, zydot, uy");
 
-	//Serial.println("x, zx, xdot, zxdot,integralx xDesired, ux");
+	Serial.println("x, xDot, y, yDot, ux, uy");
 	//Serial.println("x, Kx, xDot, K_xDot, integral, K_integral, U");
-	//Serial.println("x, zX, xDot, z_xDot");
-	Serial.println("SG_x, roll_x, SG_y, roll_y");
+	//Serial.println("zX, zY");
+	//sensor.displayCalStatus();
+	//Serial.println("t, y, Zy, yDot, ZyDot");
 
 	//Serial.println("t, y, zy, ydot, zydot");
 
-	//Serial.println("theta, zTheta, thetaDot, zThetaDot, input");
+	//Serial.println("thetaX, thetaDotX, thetaY, thetaDotY, ux, uy");
 	//Serial.println(F("Adafruit 9 DOF Pitch/Roll/Heading Example")); Serial.println("");
 	//Serial.println("t, inp x, inp y, out x,out y, rollx, rolly");
 	//Serial.println("inpx, inpy, rollx,rolly, gyrox, gyroy");
@@ -166,62 +175,20 @@ void setup()
 
 void loop()
 {
-
-/*
-
-	sensorPack.update() // Updates all sensors
-	sensorPack.getZ(Zx, Zy);
-	KFx.predict(Ux);
-	KFy.predict(Uy);
-
-
-
-*/
-
-
-
- //delay(10);
-
 	t = millis();
-
-	if (t > 6 * 1000 && true)
-	{
-		//controller.setXDesired(75 * sin(4.0 * t/1000));
-		//controller.setYDesired(100 * cos(4.0 * t/1000));
-		//robot.set_pose({0, 0, 0, radians(0), radians(10 * cos(2.0 * t/1000)), 0});
-	}
-
-
-	if (t > 15 * 1000 && false)
-	{
-		controller.setXDesired(-50);
-		controller.setYDesired(-75);
-	}
 
 	screen.update();
 	sensor.update();
 	controller.update();
-	//robot.set_pose({0,0,0,radians(controller.getUx()),radians(controller.getUy()),0});
-	//robot.set_pose({0,0,0,controller.getUx(),controller.getUy(),0});
-
-
-	//demo();
-	//test();
-	//rotationTest();
-	//rotationTest2();
-
-	// 8 to 1000
 
 	inpU = controller.getU();
-
-	//robot.set_pose({0,0,0,radians(inpU[0]),radians(inpU[1]),0});
-
+	robot.set_pose({0,0,0,inpU[0],inpU[1],0});
 
 	//robot.set_pose({20 * sin(3.0 * t/1000), 20 * cos(8.0 * t/1000), 0, 0, 0, 0});
 	//robot.set_pose({0, 0, 0, radians(10 * sin(5.0 * t/1000)), radians(10 * sin(3.0 * t/1000)), 0});
 	//robot.set_pose({0, 0, 0, radians(10 * sin(1.0 * t/1000)), radians(10 * sin(0.7 * t/1000)), 0});
-	//robot.set_pose({0, 0, 0, radians(10 * sin(4.0 * t/1000)), radians(10 * sin(3.0 * t/1000)), 0});
-	//robot.set_pose({-0.4106,1.5192,-2.3289,radians(10),radians(10),0});
+	//robot.set_pose({0, 30 * sin(5.0 * t/1000), 6 * sin(3.0 * t/1000), 0, 0, 0});
+	//robot.set_pose({-0.4106,1.5192,-2.3289,radians(5),radians(5),0});
 	//delay(2000);
 	//robot.set_pose({0,0,15,radians(10),radians(10),0});
 	//delay(2000);
@@ -245,6 +212,8 @@ void loop()
 	//robot.set_pose(0,30,-controller.getUx() + xOffset, -controller.getUy());
 //step_input();
 
+
+
 }
 
 
@@ -254,14 +223,14 @@ void step_input()
 {
 	if (t > 4 * 1000 && val2)
 	{
-		ssc[5].set_degrees(90);
+		ssc[0].set_degrees(180);
 		ssc.commit(1000);
 		val2 = false;
 	}
 	val = analogRead(9);
 	Serial.print(int(t)); Serial.print(", ");
-	Serial.print(ssc[5].get_degrees()); Serial.print(", ");
-	Serial.print(ssc[5].get_position()); Serial.print(", ");
+	Serial.print(ssc[0].get_degrees()); Serial.print(", ");
+	Serial.print(ssc[0].get_position()); Serial.print(", ");
 	Serial.print(val);
 	Serial.print("\n");
 

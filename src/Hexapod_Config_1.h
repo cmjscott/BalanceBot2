@@ -177,17 +177,30 @@ Kalman filter matrix coeficient definitions.
 const double AxxVal[4] = {1, 0.017,
                           0, 1};
 
-const double BxxVal[4] = {0.07883, 1.051,
+//const double BxxVal[4] = {0.07883, 1.051,
+//                          0, 0};
+
+const double BxxVal[4] = {0, 1,
                           0, 0};
 
 const double HxxVal[4] = {1.0, 0,
                           0, 1.0};
 
+/*
+Decent enough values. Revert to these if you fuck it up.
 const double QxxVal[4] = {0.05, 0.01,
                         	0.01, 0.05};
 
 const double RxxVal[4] = {0.08, 0.001,
                         	 0.001, 0.3};
+
+*/
+
+const double QxxVal[4] = {0.05, 0,
+                        	0, 0.05};
+
+const double RxxVal[4] = {0.01, 0,
+                        	 0, 0.15};
 
 const double PxxVal[4] = {1, 0,
 		 							        0, 1,};
@@ -197,7 +210,8 @@ const double PxxVal[4] = {1, 0,
 //const double KxxVal[2] = {0.05, 0.04};
 
 //const double KxxVal[2] = {0.07, 0.028}; // good gains for the smaller platform
-const double KxxVal[2] = {0.0012, 0.00038};
+//const double KxxVal[2] = {0.0012, 0.00038};
+const double KxxVal[2] = {0.0012, 0.0005};
 
 // Y axis filter parameters
 
@@ -210,11 +224,11 @@ const double ByyVal[4] = {0, 0,
 const double HyyVal[4] = {1.0, 0,
                           0, 1.0};
 
-const double QyyVal[4] = {0.08, 0.01,
-                        	 0.01, 0.08};
+const double QyyVal[4] = {0.05, 0,
+                        	 0, 0.05};
 
-const double RyyVal[4] = {0.08, 0.001,
-                        	 0.001, 0.3};
+const double RyyVal[4] = {0.01, 0,
+                        	 0, 0.15};
 
 const double PyyVal[4] = {1, 0,
 		 							        0, 1,};
@@ -226,7 +240,8 @@ const double XVal[2] = {0, 0};
 
 
 //const double KyyVal[2] = {0.07, 0.028}; // good gains for the smaller platform
-const double KyyVal[2] = {0.0012, 0.00038};
+//const double KyyVal[2] = {0.0012, 0.0006};
+const double KyyVal[2] = {0.0012, 0.0005};
 
 
 

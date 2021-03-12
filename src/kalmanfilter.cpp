@@ -25,8 +25,9 @@ bool KalmanFilter::start(
   return true;
 }
 
-bool KalmanFilter::start(const int nin, const double xin[], const double Pin[], const double Ain[], const double Bin[], const double Hin[], const double Qin[], const double Rin[])
+bool KalmanFilter::start(const int nin, const double xin[],  const double Pin[], const double Ain[], const double Bin[], const double Hin[], const double Qin[], const double Rin[])
 {
+  /*
   _n = nin;
   _I = MatrixXd::Identity(_n, _n);
 
@@ -39,12 +40,33 @@ bool KalmanFilter::start(const int nin, const double xin[], const double Pin[], 
   _R = MatrixXd(2,2);
 
   for (uint8_t i=0; i<4; i++){_Pmat(i) = Pin[i];}
+  //for (auto i : Pin){_Pmat(i) = Pin[i];}
   for (uint8_t i=0; i<4; i++){_A(i) = Ain[i];}
   for (uint8_t i=0; i<4; i++){_Bmat(i) = Bin[i];}
   for (uint8_t i=0; i<4; i++){_H(i) = Hin[i];}
   for (uint8_t i=0; i<4; i++){_Q(i) = Qin[i];}
   for (uint8_t i=0; i<4; i++){_R(i) = Rin[i];}
   for (uint8_t i=0; i<2; i++){_x(i) = xin[i];}
+*/
+  _n = nin;
+  _I = MatrixXd::Identity(_n, _n);
+
+  _x = VectorXd(_n);
+  _Pmat = MatrixXd(_n,_n);
+  _A = MatrixXd(_n,_n);
+  _Bmat = MatrixXd(_n,_n);
+  _H = MatrixXd(_n,_n);
+  _Q = MatrixXd(_n,_n);
+  _R = MatrixXd(_n,_n);
+
+  for (uint8_t i=0; i<(_n * _n); i++){_Pmat(i) = Pin[i];}
+  //for (auto i : Pin){_Pmat(i) = Pin[i];}
+  for (uint8_t i=0; i<(_n * _n); i++){_A(i) = Ain[i];}
+  for (uint8_t i=0; i<(_n * _n); i++){_Bmat(i) = Bin[i];}
+  for (uint8_t i=0; i<(_n * _n); i++){_H(i) = Hin[i];}
+  for (uint8_t i=0; i<(_n * _n); i++){_Q(i) = Qin[i];}
+  for (uint8_t i=0; i<(_n * _n); i++){_R(i) = Rin[i];}
+  for (uint8_t i=0; i<_n; i++){_x(i) = xin[i];}
 
   _Pmat.transposeInPlace();
   _A.transposeInPlace();

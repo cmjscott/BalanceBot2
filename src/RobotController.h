@@ -45,6 +45,8 @@ public:
 
 	void home();
 
+	void setBias(double _biasX, double _biasY);
+
 
 
 
@@ -59,6 +61,8 @@ private:
 
 	int8_t m_moveOK;
 	angle_t m_servoAngles[NB_SERVOS];
+
+	double m_biasX, m_biasY;
 
 
 	friend void setup();
