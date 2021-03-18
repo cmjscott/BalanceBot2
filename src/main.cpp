@@ -11,27 +11,27 @@
 #include "Hexapod_Kinematics.h"
 #include "Hexapod_Config_1.h"
 #include "SensorPack.h"
-
-
-// adafruit 9DOF libraries
-#include "Wire.h"
-#include "Adafruit_Sensor.h"
-#include "Adafruit_LSM303_U.h"
-#include "Adafruit_L3GD20_U.h"
-#include "Adafruit_9DOF.h"
-#include "Adafruit_BNO055.h"
-
-// adafruit touch screen libraries
-#include "Adafruit_STMPE610.h"
-
-
-
-#include "ArduinoEigen.h"
 #include "kalmanfilter.h"
 
+// adafruit 9DOF libraries
+//#include "Wire.h"
+//#include "Adafruit_Sensor.h"
+//#include "Adafruit_LSM303_U.h"
+//#include "Adafruit_L3GD20_U.h"
+//#include "Adafruit_9DOF.h"
+//#include "Adafruit_BNO055.h"
+
+// adafruit touch screen libraries
+//#include "Adafruit_STMPE610.h"
 
 
-/* Assign a unique ID to the sensors */
+
+//#include "ArduinoEigen.h"
+
+
+
+/*
+// Assign a unique ID to the sensors
 Adafruit_9DOF                	dof   = Adafruit_9DOF();
 Adafruit_LSM303_Accel_Unified accel = Adafruit_LSM303_Accel_Unified(30301);
 Adafruit_LSM303_Mag_Unified   mag   = Adafruit_LSM303_Mag_Unified(30302);
@@ -44,9 +44,10 @@ sensors_event_t mag_event;
 sensors_event_t gyro_event;
 sensors_vec_t   orientation;
 
-/* Update this with the correct SLP for accurate altitude measurements */
+// Update this with the correct SLP for accurate altitude measurements
 float seaLevelPressure = SENSORS_PRESSURE_SEALEVELHPA;
 
+*/
 SSC32 ssc;
 RobotController robot;
 TouchScreen screen;
@@ -66,18 +67,18 @@ bool val2 = true;
 
 // offset for the x angle to make the home position totally flat
 // y did not need one
-float xOffset = 1.25;
+//float xOffset = 1.25;
 
 
 void kalmanTest();
 void initKalman();
-void step_input();
-void demo();
-void test();
-void rotationTest();
-void rotationTest2();
-void printIMU();
-void initSensors();
+//void step_input();
+//void demo();
+//void test();
+//void rotationTest();
+//void rotationTest2();
+//void printIMU();
+//void initSensors();
 
 
 void setup()
@@ -218,7 +219,8 @@ void loop()
 
 
 
-
+// NOT USED
+/*
 void step_input()
 {
 	if (t > 4 * 1000 && val2)
@@ -236,8 +238,10 @@ void step_input()
 
 	delay(10);
 }
+*/
 
-
+// NOT USED
+/*
 void test()
 {
 	uint16_t x, y;
@@ -257,7 +261,10 @@ void test()
     touch.writeRegister8(STMPE_INT_STA, 0xFF); // reset all ints, in this example unneeded depending in use
   }
 }
+*/
 
+// NOT USED
+/*
 void demo()
 {
 	const platform_t coords[] = {
@@ -309,8 +316,10 @@ void demo()
 		delay(2000);
 			}
 }
+*/
 
-
+// NOT USED
+/*
 void rotationTest()
 {
 	double angles[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
@@ -359,7 +368,10 @@ void rotationTest()
 	}
 
 }
+*/
 
+// NOT USED
+/*
 void rotationTest2()
 {
 	double angles[] = {-9, -8, -7, -6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
@@ -381,10 +393,13 @@ void rotationTest2()
 	}
 	//delay(1000);
 }
+*/
 
+// NOT USED
+/*
 void printIMU()
 {
-	/* Calculate pitch and roll from the raw accelerometer data */
+	// Calculate pitch and roll from the raw accelerometer data
 	accel.getEvent(&accel_event);
 	mag.getEvent(&mag_event);
 	gyro.getEvent(&gyro_event);
@@ -396,7 +411,7 @@ void printIMU()
 
 	if (dof.accelGetOrientation(&accel_event, &orientation)&& true)
 	{
-		/* 'orientation' should have valid .roll and .pitch fields */
+		// 'orientation' should have valid .roll and .pitch fields
 		Serial.print(-orientation.roll);
 		Serial.print(",");
 		Serial.print(orientation.pitch);
@@ -410,24 +425,27 @@ void printIMU()
 
 	Serial.print("\n");
 }
+*/
 
+// NOT USED
+/*
 void initSensors()
 {
   if(!accel.begin())
   {
-    /* There was a problem detecting the LSM303 ... check your connections */
+    // There was a problem detecting the LSM303 ... check your connections
     Serial.println(F("Ooops, no LSM303 detected ... Check your wiring!"));
     while(1);
   }
   if(!mag.begin())
   {
-    /* There was a problem detecting the LSM303 ... check your connections */
+    // There was a problem detecting the LSM303 ... check your connections
     Serial.println("Ooops, no LSM303 detected ... Check your wiring!");
     while(1);
   }
 	if(!gyro.begin(GYRO_RANGE_2000DPS))
   {
-    /* There was a problem detecting the LSM303 ... check your connections */
+    // There was a problem detecting the LSM303 ... check your connections
     Serial.println("Ooops, no L3GD20 detected ... Check your wiring!");
     while(1);
   }
@@ -438,6 +456,7 @@ void initSensors()
 	}
 	Serial.println("Waiting for touch sense");
 }
+*/
 
 void initKalman()
 {
