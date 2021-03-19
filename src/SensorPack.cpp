@@ -158,13 +158,15 @@ void SensorPack::getPlatformZ(Vector2d& _Zx, Vector2d& _Zy)
 	_Zy[1] = 0;
 	*/
 
-	/*
+
 	_Zx[0] = applySGFilter(m_xSamples,SGFILTER_COEFF0);
-	_Zx[1] = radians((gyro_event.gyro.x - gyroBiasX));
+	_Zx[1] = 0;
+	//_Zx[1] = radians((gyro_event.gyro.x - gyroBiasX));
 
 	_Zy[0] = applySGFilter(m_ySamples,SGFILTER_COEFF0);
-	_Zy[1] = radians((gyro_event.gyro.y - gyroBiasY));
-*/
+	_Zy[1] = 0;
+	//_Zy[1] = radians((gyro_event.gyro.y - gyroBiasY));
+
 /*
 		// <position, angle, gyro>
 		_Zx[0] = (orientation.roll - rollBiasX);

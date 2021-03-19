@@ -150,7 +150,7 @@ void setup()
 	//Serial.println("x, zx, xdot, zxdot, theta, zTheta, thetaDot, zThetaDot, input");
 	//Serial.println("t, x, zx, xdot, zxdot, ux, y, zy, ydot, zydot, uy");
 
-	Serial.println("targetX, x, ux,targetY, y, uy");
+	Serial.println("x, ux, y, uy");
 	//Serial.println("x, Kx, xDot, K_xDot, integral, K_integral, U");
 	//Serial.println("zX, zY");
 	//sensor.displayCalStatus();
@@ -185,7 +185,7 @@ void loop()
 	//controller.setYDesired(50 * cos(1.0 * t/1000));
 
 	inpU = controller.getU();
-	robot.set_pose({0,0,0,inpU[0],inpU[1],0});
+	//robot.set_pose({0,0,0,inpU[0],inpU[1],0});
 
 	//robot.set_pose({20 * sin(3.0 * t/1000), 20 * cos(8.0 * t/1000), 0, 0, 0, 0});
 	//robot.set_pose({0, 0, 0, radians(10 * sin(5.0 * t/1000)), radians(10 * sin(3.0 * t/1000)), 0});

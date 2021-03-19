@@ -50,7 +50,7 @@ void Controller::begin()
   */
 
   kpx = -0.0005;
-  kix = -0.0001;
+  kix = -0.0002;
   kdx = -0.0006;
 
   kpy = -0.0006;
@@ -154,11 +154,11 @@ void Controller::PIDTest()
   u1=u0;
 
   //  update outputs for X
-  e0[0] = targetsX[0];
+  e0[0] = Zx[0];
   u0[0] = -(a1[0] / a0[0]) * u1[0] - (a2[0] / a0[0]) * u2[0] + (b0[0]/a0[0])*e0[0] + (b1[0]/a0[0])*e1[0] + (b2[0]/a0[0])*e2[0];
 
   // update outputs for Y
-  e0[1] = targetsY[0];
+  e0[1] = Zy[0];
   u0[1] = -(a1[1]/a0[1])*u1[1] -(a2[1]/a0[1])*u2[1] + (b0[1]/a0[1])*e0[1] + (b1[1]/a0[1])*e1[1] + (b2[1]/a0[1])*e2[1];
 
 }
@@ -200,11 +200,11 @@ Serial.print(degrees(inpU[1])); Serial.print(", ");
 */
 
 
-Serial.print(targetsX[0]); Serial.print(", ");
-Serial.print(statesX[0]); Serial.print(", ");
+Serial.print(Zx[0]); Serial.print(", ");
+//Serial.print(statesX[0]); Serial.print(", ");
 Serial.print(degrees(inpU[0])); Serial.print(", ");
-Serial.print(targetsY[0]); Serial.print(", ");
-Serial.print(statesY[0]); Serial.print(", ");
+Serial.print(Zy[0]); Serial.print(", ");
+//Serial.print(statesY[0]); Serial.print(", ");
 Serial.print(degrees(inpU[1])); Serial.print(", ");
 //Serial.print(getTimestep()); Serial.print(", ");
 
