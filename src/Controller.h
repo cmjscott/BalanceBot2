@@ -27,7 +27,7 @@ public:
 
 	void setOutputLimits(float minOutput, float maxOutput){m_minOutput = minOutput; m_maxOutput = maxOutput;}
 
-	void calculatePose();
+	void PIDTest();
 
 	void setXDesired(float xd) {xDesired = xd;}
 	void setYDesired(float yd) {yDesired = yd;}
@@ -43,6 +43,13 @@ protected:
 	double ux, uy, xDesired, yDesired;
 	float m_minOutput, m_maxOutput;
 
+	//Variables for PID test
+	//vector[0] = x values, vector[1] = y values
+	Vector2d e2, e1, e0, u2, u1, u0;
+	Vector2d a0, a1, a2, b0, b1, b2;
+	double kpx, kpy, kix, kiy, kdx, kdy;
+	double N, Ts;
+
 	Vector2d inpU;
 	Vector2d Zx, Zy, platformZx, platformZy;
 	Vector2d statesX, statesY, targetsX, targetsY;
@@ -50,6 +57,7 @@ protected:
 	Vector2d Kx, Ky;
 	SensorPack *sensorPack;
 	KalmanFilter *KFx, *KFy;
+
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////

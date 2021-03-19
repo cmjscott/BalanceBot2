@@ -150,11 +150,13 @@ void SensorPack::getZ(Vector2d& _Zx, Vector2d& _Zy)
 
 void SensorPack::getPlatformZ(Vector2d& _Zx, Vector2d& _Zy)
 {
+	/*
 	_Zx[0] = radians(bno_event.orientation.z);
 	_Zx[1] = 0;
 
 	_Zy[0] = radians(bno_event.orientation.y);
 	_Zy[1] = 0;
+	*/
 
 	/*
 	_Zx[0] = applySGFilter(m_xSamples,SGFILTER_COEFF0);
@@ -242,7 +244,7 @@ void SensorPack::initSensors()
 	*/
 	if(!bno.begin())
 	{
-		Serial.print("Ooops, no BNO055 detected ... Check your wiring or I2C ADDR!");
+		//Serial.print("Ooops, no BNO055 detected ... Check your wiring or I2C ADDR!");
 	} else {
 		delay(1000);
 		resetBNO_offsets();
