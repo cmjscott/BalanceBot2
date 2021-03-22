@@ -71,10 +71,11 @@ void Controller::reset()
 
 void Controller::process(float timestep)
 {
-  int t = millis();
+  //int t = millis();
   sensorPack->getZ(Zx, Zy);
-  sensorPack->getPlatformZ(platformZx, platformZy);
+  //sensorPack->getPlatformZ(platformZx, platformZy);
 
+/*
   KFx->predict(inpU);
   KFy->predict(inpU);
 
@@ -87,18 +88,20 @@ void Controller::process(float timestep)
   targetsX = statesX;
   targetsY = statesY;
 
-  //targetsX = Zx;
-  //targetsY = Zy;
+  targetsX = Zx;
+  targetsY = Zy;
+*/
 
-  targetsX[0] = targetsX[0] - xDesired;
-  targetsY[0] = targetsY[0] - yDesired;
+  //targetsX[0] = targetsX[0] - xDesired;
+  //targetsY[0] = targetsY[0] - yDesired;
 
-  double intTest = 0.003;
-  double satTarget = 0.1 / intTest;
-  intTest = 0;
 
-  integralX[0] = saturate(integralX[0] + (targetsX[0] * getTimestep()),-satTarget,satTarget) * sensorPack->isTouched();
-  integralY[0] = saturate(integralY[0] + (targetsY[0] * getTimestep()),-satTarget,satTarget) * sensorPack->isTouched();
+  //double intTest = 0.003;
+  //double satTarget = 0.1 / intTest;
+  //intTest = 0;
+
+  //integralX[0] = saturate(integralX[0] + (targetsX[0] * getTimestep()),-satTarget,satTarget) * sensorPack->isTouched();
+  //integralY[0] = saturate(integralY[0] + (targetsY[0] * getTimestep()),-satTarget,satTarget) * sensorPack->isTouched();
 
 
 

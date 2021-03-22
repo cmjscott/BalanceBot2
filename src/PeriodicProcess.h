@@ -17,6 +17,8 @@ public:
 
 	bool update();
 
+	void forceProcess();
+
 	bool isEnabled() const {return m_enabled;}
 	bool isUpdated();
 

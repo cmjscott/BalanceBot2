@@ -41,7 +41,7 @@ public:
 
 	void set_pose(platform_t desiredPose);
 
-	void set_pose(platform_t& desiredPose);
+	void set_pose_at_point(platform_t desiredPose, double x_pos = 0, double y_pos = 0);
 
 	void home();
 

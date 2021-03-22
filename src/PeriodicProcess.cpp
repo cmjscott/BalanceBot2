@@ -42,3 +42,8 @@ bool PeriodicProcess::isUpdated()
 	}
 	return false;
 }
+
+void PeriodicProcess::forceProcess()
+{
+	process(m_clock.restart());
+}

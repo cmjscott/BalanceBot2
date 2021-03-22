@@ -62,8 +62,13 @@ angle_t servo_angles[NB_SERVOS];
 
 long long t;
 
+
 int val;
 bool val2 = true;
+
+IntervalTimer testTimer;
+long long oldT = 0;
+int deltaT = 0;
 
 // offset for the x angle to make the home position totally flat
 // y did not need one
@@ -72,7 +77,7 @@ bool val2 = true;
 
 void kalmanTest();
 void initKalman();
-//void step_input();
+void intTimer();
 //void demo();
 //void test();
 //void rotationTest();
@@ -121,7 +126,7 @@ void setup()
 
 	controller.config(sensor, KFx, KFy);
 	controller.enable();
-	controller.setTimestep(0.015);
+	controller.setTimestep(0.005);
 	controller.begin();
 
 	if(true){
@@ -151,6 +156,8 @@ void setup()
 	//Serial.println("t, x, zx, xdot, zxdot, ux, y, zy, ydot, zydot, uy");
 
 	Serial.println("x, ux, y, uy");
+
+	testTimer.begin(intTimer,5000);
 	//Serial.println("x, Kx, xDot, K_xDot, integral, K_integral, U");
 	//Serial.println("zX, zY");
 	//sensor.displayCalStatus();
@@ -176,15 +183,20 @@ void setup()
 
 void loop()
 {
+
+	/*
 	t = millis();
 
 	screen.update();
 	sensor.update();
 	controller.update();
+
 	//controller.setXDesired(50 * sin(1.0 * t/1000));
 	//controller.setYDesired(50 * cos(1.0 * t/1000));
 
 	inpU = controller.getU();
+	*/
+
 	//robot.set_pose({0,0,0,inpU[0],inpU[1],0});
 
 	//robot.set_pose({20 * sin(3.0 * t/1000), 20 * cos(8.0 * t/1000), 0, 0, 0, 0});
@@ -219,28 +231,17 @@ void loop()
 
 }
 
-
-
-// NOT USED
-/*
-void step_input()
+void intTimer()
 {
-	if (t > 4 * 1000 && val2)
-	{
-		ssc[0].set_degrees(180);
-		ssc.commit(1000);
-		val2 = false;
-	}
-	val = analogRead(9);
-	Serial.print(int(t)); Serial.print(", ");
-	Serial.print(ssc[0].get_degrees()); Serial.print(", ");
-	Serial.print(ssc[0].get_position()); Serial.print(", ");
-	Serial.print(val);
-	Serial.print("\n");
-
-	delay(10);
+	screen.forceProcess();
+	sensor.forceProcess();
+	controller.forceProcess();
+	inpU = controller.getU();
+	robot.set_pose({0,0,0,inpU[0],inpU[1],0});
+	//robot.set_pose_at_point({0,0,0,inpU[0],inpU[1],0},double(screen.getX()),0);
+	//robot.set_pose({0,0,0,radians(10),0,0});
 }
-*/
+
 
 // NOT USED
 /*
