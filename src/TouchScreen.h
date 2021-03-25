@@ -39,6 +39,8 @@ public:
 
 	int m_isTouched = 0;
 
+	
+
 protected:
 	void touchToPos();
 	virtual void process(float timestep);
@@ -53,7 +55,7 @@ protected:
 	float m_xSamples[SGFILTER_NP];
 	float m_ySamples[SGFILTER_NP];
 
-
+	Adafruit_STMPE610 touch;
 
 	int m_xMax, m_xMin, m_yMax, m_yMin;
 	float m_xLength, m_yLength, m_xPos, m_yPos;
@@ -61,7 +63,7 @@ protected:
 	float m_timeout = 1000000;
 
 
-	Adafruit_STMPE610 touch;
+	
 	Clock m_clock;
 
 	static float applySGFilter(const float samples[], const float coeffs[]);

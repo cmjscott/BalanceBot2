@@ -89,9 +89,9 @@ void intTimer();
 void setup()
 {
 	Serial.begin(115200);
-	Serial.println("x, xDot, y, yDot, ux, uy");
 	Serial1.begin(115200);
 
+	
 
 
 	inpU[0] = 0;
@@ -110,24 +110,7 @@ void setup()
 	//ssc.commit();
 
 	//screen.config xMax, xMin, xLength, yMax, yMin, yLength);
-	screen.config(3875, 200, 228, 4000, 75, 304); // milimeters
-	screen.enable();
-	screen.setTimestep(0.005);
-	screen.begin();
-
-	initKalman();
-
-	sensor.config(screen, KFPlatformX, KFPlatformY);
-	sensor.setBias(-0.45, 0.3, -0.01, -0.08);
-	sensor.enable();
-	sensor.setTimestep(0.005);
-	sensor.begin();
-
-
-	controller.config(sensor, KFx, KFy);
-	controller.enable();
-	controller.setTimestep(0.005);
-	controller.begin();
+	
 
 	if(true){
 		ssc[0].config(500, 2500, 0, 180, -60, true);
@@ -148,6 +131,24 @@ void setup()
 		//controller.setYDesired(30.0);
 	}
 
+	screen.config(3875, 200, 228, 4000, 75, 304); // milimeters
+	screen.enable();
+	screen.setTimestep(0.005);
+	screen.begin();
+
+	initKalman();
+
+	sensor.config(screen, KFPlatformX, KFPlatformY);
+	sensor.setBias(-0.45, 0.3, -0.01, -0.08);
+	sensor.enable();
+	sensor.setTimestep(0.005);
+	sensor.begin();
+
+
+	controller.config(sensor, KFx, KFy);
+	controller.enable();
+	controller.setTimestep(0.005);
+	controller.begin();
 
 
 	//initSensors();
