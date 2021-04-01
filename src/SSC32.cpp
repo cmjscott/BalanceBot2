@@ -62,8 +62,10 @@ void SSC32::Servo::set_degrees(double degrees)
 	}
 	int ms = (deg - m_deg_min) * (m_max - m_min) / (m_deg_max - m_deg_min) + m_min;
 	ms = ms + m_offset;
+
+	m_pos_deg = deg;
+	m_pos_ms = ms;
 	set_position(ms);
-	//Serial.println(ms);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////

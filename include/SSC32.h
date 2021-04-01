@@ -26,6 +26,10 @@ public:
 
 		void config(int min, int max, float deg_min, float deg_max, int offset, bool cfg_CCW);
 
+		//used for logging purposes
+		float m_pos_deg;
+		float m_pos_ms;
+
 	private:
 		friend class SSC32;
 
@@ -36,12 +40,13 @@ public:
 		SSC32* m_ssc;
 		int m_no;
 		int m_min;
-    int m_pos;
-    int m_max;
+    	int m_pos;
+    	int m_max;
 		int m_offset;
-    float m_deg_max;
-    float m_deg_min;
-    bool m_is_changed;
+    	float m_deg_max;
+    	float m_deg_min;
+		
+    	bool m_is_changed;
 		bool m_cfg_CCW;
 	};
 
@@ -55,13 +60,15 @@ public:
 
 	bool is_done();
 
+	Servo m_servos[32];
+
 private:
 	friend class Servo;
 
 	void servo_on_changed();
 
 	Stream* m_ser;
-	Servo m_servos[32];
+	
 	unsigned long m_autocommit;
 };
 

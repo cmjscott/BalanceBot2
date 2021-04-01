@@ -19,7 +19,7 @@
             "svdPath": "C:/Users/cscott/.platformio/platforms/teensy/misc/svd/MK64F12.svd",
             "preLaunchTask": {
                 "type": "PlatformIO",
-                "task": "Pre-Debug"
+                "task": "Pre-Debug (teensy35)"
             }
         },
         {

@@ -121,7 +121,7 @@ void Controller::process(float timestep)
   PIDTest();
   inpU[0] = saturate(u0[0], m_minOutput, m_maxOutput);
   inpU[1] = saturate(u0[1], m_minOutput, m_maxOutput);
-  debug();
+  //debug();
   //sensorPack->displayCalStatus();
 	//ux = ctrlx->compute(xDesired, screen->getX(), timestep);
 	//uy = ctrly->compute(yDesired, screen->getY(), timestep);
@@ -171,6 +171,12 @@ void Controller::PIDTest()
 void Controller::debug()
 {
   long long t = millis();
+
+  if(headerFlag){
+    Serial.println("x, ux, y, uy");
+    headerFlag = false;
+  }
+  
   //Serial.print(double(t/1000.0),4); Serial.print(", ");
 
 /*
