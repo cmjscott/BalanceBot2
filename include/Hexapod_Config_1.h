@@ -158,12 +158,12 @@ const double HX_C_MAX = radians(55);
 const double HX_C_MID = (HX_C_MAX + HX_C_MIN) / 2;
 const double HX_C_BAND = HX_C_MAX - HX_C_MIN;
 
-const double THETA_P = radians(41.99); // Platform joint angle (radians) offset from AXIS[1|2|3]. A value of zero puts these joints directly on the axes.
-const double THETA_B = radians(19.72); // Base Servo pinion angle (radians) offset from AXIS[1|2|3]. A value of zero puts the servo pinion directly on the axes.
-const double P_RAD = 84.69;
-//const double P_RAD = 62.91;          // Platform radius (mm). The distance from the center of the platform to the center of one platform / pushrod "joint". This should be the same for all six pushrods.
+const double THETA_P = radians(41.85); // Platform joint angle (radians) offset from AXIS[1|2|3]. A value of zero puts these joints directly on the axes.
+const double THETA_B = radians(16.71); // Base Servo pinion angle (radians) offset from AXIS[1|2|3]. A value of zero puts the servo pinion directly on the axes.
+const double P_RAD = 86.185;
+//const double P_RAD = 84.69;          // Platform radius (mm). The distance from the center of the platform to the center of one platform / pushrod "joint". This should be the same for all six pushrods.
 //const double B_RAD = 94.757; old, before 14mm standoffs added
-const double B_RAD = 106.36;// Base radius (mm). Distance from the center of the base plate to the center of one servo pinion gear. Again, this should be the same for all six servos.
+const double B_RAD = 111.28;// Base radius (mm). Distance from the center of the base plate to the center of one servo pinion gear. Again, this should be the same for all six servos.
 const double ARM_LENGTH = 25.0;          // Servo arm length (mm). Distance from the center of the servo pivot to the center of the pushrod pivot on the servo arm.
 const double ROD_LENGTH = 180.0;         // Push rod length (mm). Distance between pushrod ball joints (servo to platform).
 const double Z_HOME = -170; // Default Z height of the platform (above the base), with servo arms horizontal. Formally, the distance from the plane described by the collection of servo pinion gear centers, to the plane described by the collection of platform / pushrod joints. Must Be fine tuned manualy or computed with a numerical solver.
