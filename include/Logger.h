@@ -3,12 +3,38 @@
 
 #include <Arduino.h>
 #include <LinkedList.h>
+#include <ArduinoSTL.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 class Logger
 {
 public:
+
+	class LoggerData
+	{
+	public:
+		LoggerData();
+
+		String m_header;
+		float* m_floatData = nullptr;
+		double* m_doubleData = nullptr;
+		int* m_intData = nullptr;
+
+		void appendFloat(float *var, const String& headerName);
+		void appendDouble(double *var, const String& headerName);
+		void appendInt(int *var, const String& headerName);
+
+		void logData(Stream* serStream);
+		void logHeader(Stream* serStream);
+
+		~LoggerData();
+
+	private:
+		friend class Logger;
+	};
+
+
 	void config(Stream& ser, const String delim = ",", bool logTime = true);
 
 
@@ -27,9 +53,7 @@ private:
 	String m_header;
 	String m_delim;
 
-	LinkedList<float*> m_floatList;
-	LinkedList<double*> m_doubleList;
-	LinkedList<int*> m_intList;
+	std::vector<LoggerData> m_data;
 
 	bool m_logTime;
 };
