@@ -1,6 +1,44 @@
 #include "Logger.h"
 
 
+void Logger::LoggerData::appendFloat(float *var, const String& headerName)
+{
+	m_floatData = var;
+	m_header = headerName;
+}
+
+void Logger::LoggerData::appendDouble(double *var, const String& headerName)
+{
+	m_doubleData = var;
+	m_header = headerName;
+}
+
+void Logger::LoggerData::appendInt(int *var, const String& headerName)
+{
+	m_intData = var;
+	m_header = headerName;
+}
+
+void Logger::LoggerData::logData(Stream* serStream)
+{
+	if(m_floatData)
+	{
+		serStream->print(*m_floatData);
+	}else if(m_doubleData)
+	{
+		serStream->print(*m_doubleData);
+	}else if(m_intData)
+	{
+		serStream->print(*m_intData);
+	}
+}
+
+void Logger::LoggerData::logHeader(Stream* serStream)
+{
+	serStream->print(m_header);
+}
+
+
 void Logger::config(Stream& ser, const String delim, bool logTime)
 {
 	m_ser = &ser;
@@ -16,19 +54,22 @@ void Logger::config(Stream& ser, const String delim, bool logTime)
 
 void Logger::appendFloat(float *var, const String& headerName)
 {
-	m_floatList.add(var);
+	LoggerData tempData = LoggerData();
+	tempData.appendFloat(var, headerName);
 	appendHeader(headerName);
 }
 
 void Logger::appendDouble(double *var, const String& headerName)
 {
-	m_doubleList.add(var);
+	LoggerData tempData = LoggerData();
+	tempData.appendDouble(var, headerName);
 	appendHeader(headerName);
 }
 
 void Logger::appendInt(int *var, const String& headerName)
 {
-	m_intList.add(var);
+	LoggerData tempData = LoggerData();
+	tempData.appendInt(var, headerName);
 	appendHeader(headerName);
 }
 
@@ -50,7 +91,6 @@ void Logger::log()
 	}
 	
 
-	
 	if(m_floatList.size()){
 		for(int i=0; i<m_floatList.size(); i++){
 			m_ser->print(m_delim);
