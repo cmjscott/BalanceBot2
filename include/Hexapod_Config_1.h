@@ -170,6 +170,15 @@ const double Z_HOME = -170; // Default Z height of the platform (above the base)
 //const double Z_HOME = -187; // Default Z height of the platform (above the base), with servo arms horizontal. Formally, the distance from the plane described by the collection of servo pinion gear centers, to the plane described by the collection of platform / pushrod joints. Must Be fine tuned manualy or computed with a numerical solver.
 
 
+
+
+// Kalman filter parameters
+typedef struct {
+    int n;
+    double A;
+} KF_Config;
+
+
 /*
 Kalman filter matrix coeficient definitions.
 */

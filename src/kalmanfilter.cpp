@@ -92,6 +92,7 @@ bool KalmanFilter::start(const int nin, const double xin[],  const double Pin[],
   Serial.print(_Bmat(3,0)); Serial.print(", ");
   Serial.print(_Bmat(3,1)); Serial.println("");
 */
+
   return true;
 }
 
@@ -108,12 +109,10 @@ VectorXd KalmanFilter::getState() const{
   return _x;
 }
 
-
 void KalmanFilter::predict(const VectorXd& u){
   _x = _A * _x + _Bmat * u;
   _Pmat = _A * _Pmat * _A.transpose() + _Q;
 }
-
 
 void KalmanFilter::update(const VectorXd& z){
 
