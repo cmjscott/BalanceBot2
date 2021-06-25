@@ -1,5 +1,8 @@
 #include "Logger.h"
 
+Logger::LoggerData::LoggerData(){}
+
+Logger::LoggerData::~LoggerData(){}
 
 void Logger::LoggerData::appendFloat(float *var, const String& headerName)
 {
@@ -37,6 +40,7 @@ void Logger::LoggerData::logHeader(Stream* serStream)
 {
 	serStream->print(m_header);
 }
+
 
 
 void Logger::config(Stream& ser, const String delim, bool logTime)
@@ -91,29 +95,29 @@ void Logger::log()
 	}
 	
 
-	if(m_floatList.size()){
-		for(int i=0; i<m_floatList.size(); i++){
-			m_ser->print(m_delim);
-			m_ser->print(*m_floatList.get(i));
-		}
+	// if(m_floatList.size()){
+	// 	for(int i=0; i<m_floatList.size(); i++){
+	// 		m_ser->print(m_delim);
+	// 		m_ser->print(*m_floatList.get(i));
+	// 	}
 		
-	}
+	// }
 
-	if(m_doubleList.size()){
-		for(int i=0; i<m_doubleList.size(); i++){
-			m_ser->print(m_delim);
-			m_ser->print(*m_doubleList.get(i));
-		}
+	// if(m_doubleList.size()){
+	// 	for(int i=0; i<m_doubleList.size(); i++){
+	// 		m_ser->print(m_delim);
+	// 		m_ser->print(*m_doubleList.get(i));
+	// 	}
 		
-	}
+	// }
 
-	if(m_intList.size()){
-		for(int i=0; i<m_intList.size(); i++){
-			m_ser->print(m_delim);
-			m_ser->print(*m_intList.get(i));
-		}
+	// if(m_intList.size()){
+	// 	for(int i=0; i<m_intList.size(); i++){
+	// 		m_ser->print(m_delim);
+	// 		m_ser->print(*m_intList.get(i));
+	// 	}
 		
-	}
+	// }
 
 
 	m_ser->print("\n");

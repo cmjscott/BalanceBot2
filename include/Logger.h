@@ -2,8 +2,9 @@
 #define __LOGGER_H__
 
 #include <Arduino.h>
-#include <LinkedList.h>
-#include <ArduinoSTL.h>
+//#include <LinkedList.h>
+//#include <ArduinoSTL.h>
+#include <vector>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
