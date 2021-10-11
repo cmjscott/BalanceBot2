@@ -192,15 +192,11 @@ void SensorPack::process(float timestep)
 
 	bno.getEvent(&bno_event);
 
-
-
 	screen->update();
 
 	hasMeasurement = true;
 
 	//smoothIMU();
-
-
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -246,7 +242,7 @@ void SensorPack::initSensors()
 	*/
 	if(!bno.begin())
 	{
-		//Serial.print("Ooops, no BNO055 detected ... Check your wiring or I2C ADDR!");
+		Serial.print("Ooops, no BNO055 detected ... Check your wiring or I2C ADDR!");
 	} else {
 		delay(1000);
 		resetBNO_offsets();

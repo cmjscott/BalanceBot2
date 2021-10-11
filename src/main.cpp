@@ -28,7 +28,23 @@ Logger varLogger;
 angle_t servo_angles[NB_SERVOS];
 
 long long t;
-int servo0Feedback = 0;
+
+int servo_0_Feedback = 0;
+int servo_1_Feedback = 0;
+int servo_2_Feedback = 0;
+int servo_3_Feedback = 0;
+int servo_4_Feedback = 0;
+int servo_5_Feedback = 0;
+
+int servo_0_pin = A0;
+int servo_1_pin = A1;
+int servo_2_pin = A2;
+int servo_3_pin = A3;
+int servo_4_pin = A6;
+int servo_5_pin = A7;
+
+double platformHeight = 0;
+
 
 IntervalTimer testTimer;
 long long oldT = 0;
@@ -41,15 +57,13 @@ int deltaT = 0;
 
 void kalmanTest();
 void initKalman();
-void intTimer();
+void interruptTimer();
 
 
 void setup()
 {
 	Serial.begin(115200);
 	Serial1.begin(115200);
-
-	
 
 
 	inpU[0] = 0;
@@ -97,20 +111,34 @@ void setup()
 
 
 	// must add in order: float, double, int
-	varLogger.config(Serial);
-	varLogger.appendFloat(&ssc[0].m_pos_deg,"Servo 0 command (degrees)");
-	varLogger.appendFloat(&ssc[0].m_pos_ms,"Servo 0 command (ms)");
+	varLogger.config(Serial, ",", true);
+	varLogger.append(&ssc[0].m_pos_deg,"Servo_0_command_(degrees)");
+	varLogger.append(&ssc[0].m_pos_ms,"Servo_0_command_(ms)");
+	varLogger.append(&servo_0_Feedback, "Servo_0_feedback");
 
-	varLogger.appendInt(&servo0Feedback,"Servo 0 feedback");
+	varLogger.append(&ssc[1].m_pos_deg,"Servo_1_command_(degrees)");
+	varLogger.append(&ssc[1].m_pos_ms,"Servo_1_command_(ms)");
+	varLogger.append(&servo_1_Feedback, "Servo_1_feedback");
+
+	varLogger.append(&ssc[2].m_pos_deg,"Servo_2_command_(degrees)");
+	varLogger.append(&ssc[2].m_pos_ms,"Servo_2_command_(ms)");
+	varLogger.append(&servo_2_Feedback, "Servo_2_feedback");
+
+	varLogger.append(&ssc[3].m_pos_deg,"Servo_3_command_(degrees)");
+	varLogger.append(&ssc[3].m_pos_ms,"Servo_3_command_(ms)");
+	varLogger.append(&servo_3_Feedback, "Servo_3_feedback");
+
+	varLogger.append(&ssc[4].m_pos_deg,"Servo_4_command_(degrees)");
+	varLogger.append(&ssc[4].m_pos_ms,"Servo_4_command_(ms)");
+	varLogger.append(&servo_4_Feedback, "Servo_4_feedback");
+
+	varLogger.append(&ssc[5].m_pos_deg,"Servo_5_command_(degrees)");
+	varLogger.append(&ssc[5].m_pos_ms,"Servo_5_command_(ms)");
+	varLogger.append(&servo_5_Feedback, "Servo_5_feedback");
 
 	varLogger.logHeader();
 	
-
-
-
-	testTimer.begin(intTimer,5000);
-	//testTimer.begin(intTimer,1000000);
-
+	testTimer.begin(interruptTimer,5000);
 }
 
 void loop()
@@ -159,21 +187,37 @@ void loop()
 	//robot.set_pose(0,30,-controller.getUx() + xOffset, -controller.getUy());
 //step_input();
 
-
-
 }
 
-void intTimer()
+void interruptTimer()
 {
 	screen.forceProcess();
 	sensor.forceProcess();
 	controller.forceProcess();
 	inpU = controller.getU();
-	robot.set_pose({0,0,0,inpU[0],inpU[1],0});
+	//robot.set_pose({0,0,0,inpU[0],inpU[1],0});
+	//platformHeight = 20.0*sin(millis()/1000.0);
 
-	//servo0Feedback = analogRead(0);
+	// if(millis()/1000.0 > 10.0)
+	// {
+	// 	platformHeight = 5.0;
+	// }
 
-	//varLogger.log();
+	// if(millis()/1000.0 > 13.0)
+	// {
+	// 	platformHeight = -5.0;
+	// }
+
+	robot.set_pose({0,0,platformHeight,0,0,0});
+
+	servo_0_Feedback = analogRead(servo_0_pin);
+	servo_1_Feedback = analogRead(servo_1_pin);
+	servo_2_Feedback = analogRead(servo_2_pin);
+	servo_3_Feedback = analogRead(servo_3_pin);
+	servo_4_Feedback = analogRead(servo_4_pin);
+	servo_5_Feedback = analogRead(servo_5_pin);
+
+	varLogger.log();
 	//robot.set_pose_at_point({0,0,0,inpU[0],inpU[1],0},double(screen.getX()),0);
 	//robot.set_pose({0,0,0,radians(10),0,0});
 }

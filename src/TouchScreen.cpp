@@ -67,14 +67,20 @@ void TouchScreen::config(int xMax, int xMin, float xLength, int yMax, int yMin, 
 
 void TouchScreen::begin()
 {
-	if (!touch.begin(0x41)) {
-		//Serial.println("STMPE not found!");
-		//while(1);
-	}
-	else
+	for (int i=0; i<5; i++)
 	{
-		//Serial.println("STMPE found!");
+		if (!touch.begin(0x41)) {
+			//Serial.println("STMPE not found!");
+			//while(1);
+		}
+		else
+		{
+			//Serial.println("STMPE found!");
+		}
+
+		delay(10);
 	}
+
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -18,13 +18,21 @@ public:
 		LoggerData();
 
 		String m_header;
+
+
 		float* m_floatData = nullptr;
 		double* m_doubleData = nullptr;
 		int* m_intData = nullptr;
 
-		void appendFloat(float *var, const String& headerName);
-		void appendDouble(double *var, const String& headerName);
-		void appendInt(int *var, const String& headerName);
+
+		//void appendFloat(float *var, const String& headerName);
+		//void appendDouble(double *var, const String& headerName);
+		//void appendInt(int *var, const String& headerName);
+
+		void append(float *var, const String& headerName);
+		void append(double *var, const String& headerName);
+		void append(int *var, const String& headerName);
+
 
 		void logData(Stream* serStream);
 		void logHeader(Stream* serStream);
@@ -39,10 +47,15 @@ public:
 	void config(Stream& ser, const String delim = ",", bool logTime = true);
 
 
-	void appendFloat(float *var, const String& headerName);
-	void appendDouble(double *var, const String& headerName);
-	void appendInt(int *var, const String& headerName);
-	void appendHeader(const String& headerName);
+	//void appendFloat(float *var, const String& headerName);
+	//void appendDouble(double *var, const String& headerName);
+	//void appendInt(int *var, const String& headerName);
+
+	void append(float *var, const String& headerName);
+	void append(double *var, const String& headerName);
+	void append(int *var, const String& headerName);
+
+	//void appendHeader(const String& headerName);
 
 	void log();
 	void logHeader();

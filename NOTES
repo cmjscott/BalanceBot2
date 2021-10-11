@@ -1,0 +1,34 @@
+This whole thing is fucked. Let's redo some stuff
+
+
+There should be some datatypes header that stores all the common datatypes
+There should be one main data variable that holds all the current data, which is passed by reference to each driver object
+
+Data object:
+    - BNO data
+        - Orientation (euler angles)
+        - angular velocity
+        - linear acceleration
+        - acceleration
+        - gravity
+    - Ball data (touch screen)
+        - Current location
+        - Speed Estimate
+        - Maybe acceleration estimate?
+        - Slip estimate?
+    - Servo Feedback
+    - Ball State Targets
+        - Target Position
+        - Target Velocity
+    - Servo Data
+        - Current desired positions
+        - Current actual position
+    - 
+    
+
+Each component gets its own driver:
+    1. SSC32
+    2. touch screen
+    3. IMU
+    4. robot kinematics
+    5. controller

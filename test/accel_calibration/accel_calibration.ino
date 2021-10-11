@@ -251,12 +251,12 @@ void loop() {
     // Serial.print(accel.acceleration.z - grav.acceleration.z);
     // Serial.println("");
 
-    Serial.print(linAccel.acceleration.x);
-    Serial.print(", ");
-    Serial.print(linAccel.acceleration.y);
-    Serial.print(", ");
-    Serial.print(linAccel.acceleration.z);
-    Serial.println("");
+//    Serial.print(linAccel.acceleration.x);
+//    Serial.print(", ");
+//    Serial.print(linAccel.acceleration.y);
+//    Serial.print(", ");
+//    Serial.print(linAccel.acceleration.z);
+//    Serial.println("");
 
     /* Optional: Display calibration status
     if(displayCalStatus())
@@ -267,7 +267,7 @@ void loop() {
     }
 
     /* Optional: Display sensor status (debug only) */
-    //displaySensorStatus();
+    displaySensorStatus();
 
     /* New line for the next sample */
     Serial.println("");
@@ -276,6 +276,3 @@ void loop() {
     //delay(BNO055_SAMPLERATE_DELAY_MS);
     delay(5);
 }
-
-
-
