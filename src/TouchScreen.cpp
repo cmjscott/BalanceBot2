@@ -70,12 +70,12 @@ void TouchScreen::begin()
 	for (int i=0; i<5; i++)
 	{
 		if (!touch.begin(0x41)) {
-			//Serial.println("STMPE not found!");
+			Serial.println("STMPE not found!");
 			//while(1);
 		}
 		else
 		{
-			//Serial.println("STMPE found!");
+			Serial.println("STMPE found!");
 		}
 
 		delay(10);

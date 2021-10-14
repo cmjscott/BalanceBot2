@@ -208,7 +208,7 @@ void interruptTimer()
 	// 	platformHeight = -5.0;
 	// }
 
-	robot.set_pose({0,0,platformHeight,0,0,0});
+	//robot.set_pose({0,0,platformHeight,0,0,0});
 
 	servo_0_Feedback = analogRead(servo_0_pin);
 	servo_1_Feedback = analogRead(servo_1_pin);
@@ -218,7 +218,7 @@ void interruptTimer()
 	servo_5_Feedback = analogRead(servo_5_pin);
 
 	varLogger.log();
-	//robot.set_pose_at_point({0,0,0,inpU[0],inpU[1],0},double(screen.getX()),0);
+	robot.set_pose_at_point({0,0,0,inpU[0],inpU[1],0},double(screen.getX()),double(screen.getY()));
 	//robot.set_pose({0,0,0,radians(10),0,0});
 }
 

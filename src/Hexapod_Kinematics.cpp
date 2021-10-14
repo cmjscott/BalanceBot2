@@ -61,7 +61,7 @@ int8_t Hexapod_Kinematics::calcServoAnglesOld(platform_t coord, angle_t *servo_a
 
     // Algorithm 1 takes ~279 µs / movement.
     // Algorithm 2 takes ~474 µs / movement.
-    // Algorithm 2 takes ~256 µs / movement.
+    // Algorithm 3 takes ~256 µs / movement.
 #if ALGO == 1
     movOK = calcServoAnglesAlgo1(coord, servo_angles);
 #elif ALGO == 2
