@@ -32,3 +32,20 @@ Each component gets its own driver:
     3. IMU
     4. robot kinematics
     5. controller
+
+
+
+Notes on virtual axes vs physical axes
+Performed a +25mm move for the hx_x, hx_y, hx_z axes
+	- hx_x = x+ (as drawn on touchpad)
+	- hx_y = y+ (as drawn on touchpad)
+	- hx_z = z+
+Performed a 15 degree rotation for the rotations (hx_a, hx_b, hx_c)
+	- hx_a = positive rotation about x
+	- hx_b = positive rotation about y
+	- hx_c = positive rotation about z
+	
+Note: observed some flexing in the rods, and some tremors in the servos. They seemed to be fighting eachother. Something is definitely not set correctly...
+
+	
+	

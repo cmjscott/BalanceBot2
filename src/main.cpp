@@ -2,6 +2,7 @@
 
 #include <Arduino.h>
 #include <math.h>
+#include <memory>
 
 #include "SSC32.h"
 #include "RobotController.h"
@@ -110,7 +111,7 @@ void setup()
 	controller.begin();
 
 
-	// must add in order: float, double, int
+	// Set up logger variables for debug output
 	varLogger.config(Serial, ",", true);
 	varLogger.append(&ssc[0].m_pos_deg,"Servo_0_command_(degrees)");
 	varLogger.append(&ssc[0].m_pos_ms,"Servo_0_command_(ms)");
@@ -195,8 +196,10 @@ void interruptTimer()
 	sensor.forceProcess();
 	controller.forceProcess();
 	inpU = controller.getU();
-	//robot.set_pose({0,0,0,inpU[0],inpU[1],0});
-	//platformHeight = 20.0*sin(millis()/1000.0);
+	robot.set_pose({0,0,0,inpU[0],inpU[1],0});
+	//platformHeight = 5.0*sin(3.0*millis()/1000.0);
+	
+	//platformHeight = radians(10);
 
 	// if(millis()/1000.0 > 10.0)
 	// {
@@ -208,7 +211,7 @@ void interruptTimer()
 	// 	platformHeight = -5.0;
 	// }
 
-	//robot.set_pose({0,0,platformHeight,0,0,0});
+	//robot.set_pose({0,0,0,0,platformHeight,0});
 
 	servo_0_Feedback = analogRead(servo_0_pin);
 	servo_1_Feedback = analogRead(servo_1_pin);
@@ -218,7 +221,7 @@ void interruptTimer()
 	servo_5_Feedback = analogRead(servo_5_pin);
 
 	varLogger.log();
-	robot.set_pose_at_point({0,0,0,inpU[0],inpU[1],0},double(screen.getX()),double(screen.getY()));
+	//robot.set_pose_at_point({0,0,0,inpU[0],inpU[1],0},double(screen.getX()),double(screen.getY()));
 	//robot.set_pose({0,0,0,radians(10),0,0});
 }
 

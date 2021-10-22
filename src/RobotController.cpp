@@ -37,12 +37,13 @@ void RobotController::set_pose(platform_t desiredPose)
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void RobotController::set_pose_at_point(platform_t desiredPose, double x_pos, double y_pos)
-{
-    double z = sin(desiredPose.hx_a)*x_pos;
-    double x = x_pos*(1.0-cos(desiredPose.hx_a));
+{   
+    double x_offset = x_pos*(1.0-cos(desiredPose.hx_a));
+    double y_offset = y_pos*(1.0-cos(desiredPose.hx_b));
+    double z_offset = sin(desiredPose.hx_a)*x_pos + sin(desiredPose.hx_b)*y_pos;
     
 
-	platform_t newPose = {desiredPose.hx_x, desiredPose.hx_y + x, desiredPose.hx_z + z,
+	platform_t newPose = {desiredPose.hx_x, desiredPose.hx_y + x_offset, desiredPose.hx_z + z_offset,
 												desiredPose.hx_a - m_biasX, desiredPose.hx_b - m_biasY, desiredPose.hx_c};
 
 	m_moveOK = m_ik.calcServoAngles(newPose, m_servoAngles);
