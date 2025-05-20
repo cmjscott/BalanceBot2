@@ -1,19 +1,9 @@
 
 
-#include <Arduino.h>
-#include <math.h>
-#include <memory>
 
-#include "SSC32.h"
-#include "RobotController.h"
-#include "TouchScreen.h"
-#include "Controller.h"
-#include "PID.h"
-#include "Hexapod_Kinematics.h"
-#include "Hexapod_Config_1.h"
-#include "SensorPack.h"
-#include "kalmanfilter.h"
-#include "Logger.h"
+
+#include "main.h"
+
 
 
 SSC32 ssc;
@@ -63,8 +53,8 @@ void interruptTimer();
 
 void setup()
 {
-	Serial.begin(115200);
-	Serial1.begin(115200);
+	Serial.begin(BPS);
+	Serial1.begin(BPS);
 
 
 	inpU[0] = 0;
@@ -76,20 +66,19 @@ void setup()
 	robot.begin(ssc, 0, 1, 2, 4, 5, 6);
 	//robot.setBias(radians(-0.75), radians(1.2));
 
-	if(true){
-		ssc[0].config(500, 2500, 0, 180, -60, true);
-		ssc[1].config(500, 2500, 0, 180, 70, false);
-		ssc[2].config(500, 2500, 0, 180, -20, true);
-		ssc[3].config(500, 2500, 0, 180, 70, false);
-		ssc[4].config(500, 2500, 0, 180, -70, true);
-		ssc[5].config(500, 2500, 0, 180, 100, false);
+	ssc[0].config(servo_min_duty, servo_max_duty, servo_min_degrees, servo_max_degrees, servo_0_offset, servo_CCW_positive);
+	ssc[1].config(servo_min_duty, servo_max_duty, servo_min_degrees, servo_max_degrees, servo_1_offset, servo_CW_positive);
+	ssc[2].config(servo_min_duty, servo_max_duty, servo_min_degrees, servo_max_degrees, servo_2_offset, servo_CCW_positive);
+	ssc[3].config(servo_min_duty, servo_max_duty, servo_min_degrees, servo_max_degrees, servo_3_offset, servo_CW_positive);
+	ssc[4].config(servo_min_duty, servo_max_duty, servo_min_degrees, servo_max_degrees, servo_4_offset, servo_CCW_positive);
+	ssc[5].config(servo_min_duty, servo_max_duty, servo_min_degrees, servo_max_degrees, servo_5_offset, servo_CW_positive);
 
-		delay(1000);
-		robot.set_pose({0, 0, 10, radians(0), radians(0), radians(0)});
-		delay(1000);
-		robot.set_pose({0, 0, 0, radians(0), radians(0), radians(0)});
-		delay(1000);
-	}
+	delay(1000);
+	robot.set_pose({0, 0, 10, radians(0), radians(0), radians(0)});
+	delay(1000);
+	robot.set_pose({0, 0, 0, radians(0), radians(0), radians(0)});
+	delay(1000);
+
 
 	screen.config(3875, 200, 228, 4000, 75, 304); // milimeters
 	screen.enable();

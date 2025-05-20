@@ -1,0 +1,64 @@
+1. Where useful, create config structures instead of config calls with many variable inputs.
+    This would allow for configuration via either header or config file, and would also enable
+    an array of configuration structures to be passed at once.
+    ex: ssc[0].config(500, 2500, 0, 180, -60, true); becomes ssc[0].config(axis_0_config);
+
+2. I definitely didn't know how to use virtual functions when I wrote this.
+
+3. Comment your code... I don't care how long it takes, or how "self commenting" it is, just do it.
+
+4. Move ALL debug serial print statements into their own "log()" function within each class. Calling this could either
+    be the responsibility of the main program, or could be enabled or disabled via some "enable/disable_logging()" function
+    inside each class.
+
+    Get all serial logging decoupled from the update functions! That stuff has no business showing up if I'm not debugging.
+
+    Bonus: possibly do some caching/dumping to an SD card asynchronously? Maybe store in ring buffer and dumped when
+        encountering an error? Many options for debug dumping once in "production"
+
+5. Create a sequencer that could handle things like startup, calibration, demos, etc.
+    This would allow me to perform sensor startup routines and checks in a very controlled way. I've done this before and it
+    works very well.
+
+TouchScreen
+1. I would change all of the measurements and working variables with uint16_t so that all math could be done as integer math.
+    Converting to float for outputs can be done when required, but I'd make all internal math operate on uint16_t with some
+    predetermined scale.
+
+2. Separate the definiitions of each variable, with a comment describing each
+    ex: uint16_t m_mMax; ///< Max sensor reading along x axis
+
+
+SensorPack
+1. I remember bouncing back and forth regarding whether or not to create a single class for all my sensors
+    or to configure them individually. It looks like I did both? This is a VERY messy bit of code and I'm not sure what
+    I was thinking...
+
+2. If I were to redo this, I think I would opt for each sensor as its own class, implementing some generic sensor interface.
+    I would then create the sensor pack class, where the only responsibility of this class would be to contain registered references
+    to each sensor in a map.
+    This wrapper would then fire off in the ISR, calling each registered sensor's update function.
+    Upon request, each sensor could be quiried individually using the registration name to pull the desired sensor.
+
+3. I think filtering should be left to the sensor class, as each sensor has different requirements for filtering.
+
+4. So many dead references and unused bits. I tried to use kalman filtering, but seemed to abandon that. 
+
+
+Logger
+1. Use templating instead of defining different sppend functions for different data types. I did not deeply understand templating
+    when I wrote this, and honestly, it's still a bit fuzzy for me. I need to get comfortable with templating.
+
+2. Add in some way of enabling or disabling logging on the fly, possibly tying that to compiler debug flags.
+
+3. Add a ring buffer to the logger that allows multiple "lines" of logged values to accumulate, which can be dumped on demand
+    during an error event or some other defined time.
+
+
+RobotController
+1. It would be very cool to add in a way of self leveling the robot at startup using the IMU.
+
+
+Controller
+1. oh lord, this one is rough. Looks like I implemented a descrete PID controller, despite having written a PID class?
+    No idea why I did that. This feels like it was written in a very "just get it working, it's been broken for days" mood.
