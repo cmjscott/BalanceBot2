@@ -1,4 +1,47 @@
-.pio
+# ---------------------------------
+# PlatformIO Specific
+# ---------------------------------
+.pio/
+.pioenvs/
+.piolibdeps/
+
+# ---------------------------------
+# MDT / Aerotech Standard Directories
+# ---------------------------------
+# "bin -- Output files" 
+bin/
+
+# "vs -- VisualStudio files and intermediate build directory" 
+vs/
+
+# ---------------------------------
+# IDE & Editor Files
+# ---------------------------------
+# VS Code (PlatformIO default editor)
+.vscode/*
+!.vscode/extensions.json
+!.vscode/c_cpp_properties.json
+!.vscode/launch.json
+
+# Visual Studio (if used alongside)
+*.user
+*.suo
+*.opensdf
+*.sdf
+
+# ---------------------------------
+# OS Generated Files
+# ---------------------------------
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# ---------------------------------
+# Python (if using scripts)
+# ---------------------------------
+__pycache__/
+*.pyc
+
 .clang_complete
 .gcc-flags.json
 
